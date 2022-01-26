@@ -1,7 +1,6 @@
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import Web3Modal from "web3modal"
 
 import { nftaddress, nftmarketaddress } from "../config"
 
@@ -9,10 +8,12 @@ import NFT from "../artifacts/contracts/NFT.sol/NFT.json"
 import Market from "../artifacts/contracts/Market.sol/NFTMarket.json"
 import { Layout } from "../components/Layout"
 import { Loading } from "../components/Loading"
+import { useWeb3 } from "../hooks/useWeb3"
 
 export default function NFTMarket() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState("not-loaded")
+  const web3 = useWeb3()
 
   useEffect(() => {
     loadNFTs()
@@ -60,10 +61,7 @@ export default function NFTMarket() {
   }
 
   async function buyNft(nft) {
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
+    const signer = web3.getSigner()
     const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
     const price = ethers.utils.parseUnits(nft.price.toString(), "ether")
     const transaction = await contract.createMarketSale(
@@ -104,8 +102,7 @@ export default function NFTMarket() {
                   <img
                     className="lg:h-48 md:h-36 w-full object-cover object-center"
                     src={nft.image}
-                    alt={nft.name}
-                  />
+                    alt={nft.name}/>
                 </a>
 
                 <div className="p-4">
@@ -119,8 +116,7 @@ export default function NFTMarket() {
                       height: "70px",
                       minHeight: "70px",
                       overflow: "hidden",
-                    }}
-                  >
+                    }}>
                     <p className="text-gray-400">
                       {renderDescription(nft.description)}
                     </p>
@@ -142,8 +138,7 @@ export default function NFTMarket() {
                   </p>
                   <button
                     className="w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
-                    onClick={() => buyNft(nft)}
-                  >
+                    onClick={() => buyNft(nft)}>
                     Buy as Donate
                   </button>
                 </div>
