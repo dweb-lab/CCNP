@@ -8,23 +8,34 @@ import { nftaddress, nftmarketaddress } from "../config"
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json"
 import Market from "../artifacts/contracts/Market.sol/NFTMarket.json"
 import { Layout } from "../components/Layout"
+import { useWeb3 } from "../hooks/useWeb3"
 
 export default function Home() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState("not-loaded")
+  const provider = useWeb3()
 
   useEffect(() => {
+    if (!provider) return
     loadNFTs()
-  }, [])
+  }, [provider])
+
+  // useEffect(() => {
+  //   loadNFTs()
+  // }, [])
+
   async function loadNFTs() {
-    const provider = new ethers.providers.JsonRpcProvider(
-      "https://rpc-mumbai.maticvigil.com/v1/35346f853fb4496728602ff72a70eb9a8785064e",
-    )
+    // const provider = new ethers.providers.JsonRpcProvider(
+    //   // "https://polygon-mumbai.infura.io/v3/6d993cb640374f1b8baf01f5eddaed8e",
+    //   "https://speedy-nodes-nyc.moralis.io/cebf590f4bcd4f12d78ee1d4/polygon/mumbai",
+    //   // "https://rpc-mumbai.maticvigil.com/v1/35346f853fb4496728602ff72a70eb9a8785064e",
+    // )
+    const signer = provider.getSigner()
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
     const marketContract = new ethers.Contract(
       nftmarketaddress,
       Market.abi,
-      provider,
+      signer,
     )
     const data = await marketContract.fetchMarketItems()
     console.log("data", data)
@@ -40,7 +51,7 @@ export default function Home() {
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
         let item = {
           price,
-          tokenId: i.tokenId.toNumber(),
+          itemId: i.itemId.toNumber(), // tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
           image: meta.data.image,
@@ -73,7 +84,7 @@ export default function Home() {
     console.log(nft, nft.tokenId)
     const transaction = await contract.createMarketSale(
       nftaddress,
-      nft.tokenId,
+      nft.itemId, // nft.tokenId,
       {
         value: price,
       },
