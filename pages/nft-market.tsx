@@ -1,17 +1,19 @@
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import Web3Modal from "web3modal"
 
 import { nftaddress, nftmarketaddress } from "../config"
 
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json"
 import Market from "../artifacts/contracts/Market.sol/NFTMarket.json"
 import { Layout } from "../components/Layout"
+import { Loading } from "../components/Loading"
+import { useWeb3 } from "../hooks/useWeb3"
 
-export default function Home() {
+export default function NFTMarket() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState("not-loaded")
+  const web3 = useWeb3()
 
   useEffect(() => {
     loadNFTs()
@@ -27,16 +29,11 @@ export default function Home() {
       provider,
     )
     const data = await marketContract.fetchMarketItems()
-    console.log("data", data)
 
     const items = await Promise.all(
       data.map(async (i) => {
         const tokenUri = await tokenContract.tokenURI(i.tokenId)
         const meta = await axios.get(tokenUri)
-        console.log("tokenUri", tokenUri)
-        console.log("i.tokenId", i.tokenId)
-        console.log("meta", meta)
-        console.log(i.price.toString(), "raw price")
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
         let item = {
           price,
@@ -53,24 +50,20 @@ export default function Home() {
         return item
       }),
     )
-    console.log(items)
     items.reverse()
     setNfts(items)
     setLoadingState("loaded")
   }
+
+  const renderDescription = (description: string) => {
+    if (description.length > 60) return `${description.substring(0, 60)}...`
+    return description
+  }
+
   async function buyNft(nft) {
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
+    const signer = web3.getSigner()
     const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
-    console.log(nft.price.toString())
     const price = ethers.utils.parseUnits(nft.price.toString(), "ether")
-    // const price = "0.0001"
-    // const price = nft.price.toString()
-    console.log(price)
-    console.log(nftaddress)
-    console.log(nft, nft.tokenId)
     const transaction = await contract.createMarketSale(
       nftaddress,
       nft.tokenId,
@@ -81,6 +74,17 @@ export default function Home() {
     await transaction.wait()
     loadNFTs()
   }
+
+  if (loadingState === "not-loaded") {
+    return (
+      <Layout>
+        <div className="flex w-full mt-80 justify-center">
+          <Loading />
+        </div>
+      </Layout>
+    )
+  }
+
   if (loadingState === "loaded" && !nfts.length)
     return (
       <Layout>
@@ -95,17 +99,29 @@ export default function Home() {
             {nfts.map((nft, i) => (
               <div key={i} className="border shadow rounded-xl overflow-hidden">
                 <a href={"/article?cid=" + nft.path}>
-                  <img src={nft.image} className="rounded" />
+                  <img
+                    className="lg:h-48 md:h-36 w-full object-cover object-center"
+                    src={nft.image}
+                    alt={nft.name}/>
                 </a>
 
                 <div className="p-4">
                   <a href={"/article?cid=" + nft.path}>
-                    <p className="text-2xl font-semibold">{nft.name}</p>
+                    <p className="title-font text-lg font-medium text-gray-900">
+                      {nft.name}
+                    </p>
                   </a>
-                  <div style={{ height: "70px", overflow: "hidden" }}>
-                    <p className="text-gray-400">{nft.description}</p>
+                  <div
+                    style={{
+                      height: "70px",
+                      minHeight: "70px",
+                      overflow: "hidden",
+                    }}>
+                    <p className="text-gray-400">
+                      {renderDescription(nft.description)}
+                    </p>
                   </div>
-                  <p className="text-2xl font-semibold">
+                  <p className="font-semibold">
                     By: &nbsp;
                     <a href={"/articles?author=" + nft.eth}>{nft.authors}</a>
                   </p>
