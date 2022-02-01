@@ -3,9 +3,9 @@ import { Layout } from "../components/Layout"
 export default function Home() {
   return (
     <Layout>
-      <div className="px-4" style={{ maxWidth: "1600px" }}>
-        <h2 className="px-20 py-10 text-3xl">📢Tips</h2>
-        <ul className="px-20 py-2">
+      <div className="px-4 container mx-auto">
+        <h2 className="p-6 lg:px-20 lg:py-10 text-3xl">📢Tips</h2>
+        <ul className="p-6 lg:px-20">
           <li>
             🌏 Every NFT here is licensed under{" "}
             <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
@@ -24,8 +24,8 @@ export default function Home() {
           </li>
         </ul>
 
-        <h2 className="px-20 py-10 text-3xl">📢注意</h2>
-        <ul className="px-20 py-2">
+        <h2 className="p-6 lg:px-20 lg:py-10 text-3xl">📢注意</h2>
+        <ul className="p-6 lg:px-20">
           <li>
             🌏 这里的所有NFT作品采用
             <a
@@ -46,8 +46,8 @@ export default function Home() {
           </li>
         </ul>
 
-        <h2 className="px-20 py-10 text-3xl">The Features</h2>
-        <ul className="px-20 py-2">
+        <h2 className="p-6 lg:px-20 lg:py-10 text-3xl">The Features</h2>
+        <ul className="p-6 lg:px-20">
           <li>
             🌏 All Creative Commons licensed articles will be stored on IPFS and
             indexed in dweb search engines(such as Dweb Search).
@@ -64,8 +64,8 @@ export default function Home() {
           </li>
         </ul>
 
-        <h2 className="px-20 py-10 text-3xl">(O_O)? Question?</h2>
-        <ul className="px-20 py-2">
+        <h2 className="p-6 lg:px-20 lg:py-10 text-3xl">(O_O)? Question?</h2>
+        <ul className="p-6 lg:px-20">
           <li>
             🔗 We use mumbai test network. You can add it to your Metamask with{" "}
             <a href="https://chainlist.org/">Chainlist</a>
@@ -74,7 +74,7 @@ export default function Home() {
             🌏 You can join{" "}
             <a href="https://discord.gg/QaEwmJMDJ2">Dweb Lab Discord</a>
           </li>
-          <li>
+          <li className="break-all">
             🌃 There is also an IPFS version:
             ipfs://QmeHJjYjFDLnu4pehAjRyy2MTbZCuVkXFRsvUYVfVUaYxL maybe not
             newest version

@@ -175,10 +175,10 @@ export default function MyAssets() {
   return (
     <Layout>
       <div className="flex justify-center">
-        <div className="p-4">
-          <div className="border shadow rounded-xl overflow-hidden">
+        <div className="p-6 w-full">
+          <div className="rounded-xl overflow-hidden">
             <img src={nft.image} className="rounded" />
-            <div className="p-4">
+            <div className="py-6">
               <p className="text-3xl font-semibold flex justify-center">
                 {nft.name}
               </p>

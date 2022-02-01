@@ -29,17 +29,19 @@ export default function MyAssets() {
 
   return (
     <Layout>
-      <section className="text-gray-600 body-font flex flex-wrap -m-4 justify-start m-6">
-        {nfts.map((nft, i) => (
-          <ArticleItem
-            key={i}
-            imageURL={nft.image}
-            name={nft.name}
-            tags={nft.tags}
-            authors={nft.authors}
-            path={nft.path}/>
-        ))}
-      </section>
+      <div className="container mx-auto">
+        <section className="text-gray-600 body-font flex flex-wrap justify-start">
+          {nfts.map((nft, i) => (
+            <ArticleItem
+              key={i}
+              imageURL={nft.image}
+              name={nft.name}
+              tags={nft.tags}
+              authors={nft.authors}
+              path={nft.path}/>
+          ))}
+        </section>
+      </div>
     </Layout>
   )
 }

@@ -154,7 +154,7 @@ function App({ Component, pageProps }) {
       </Head>
       <nav className="border-b p-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">Creative Commons NFT Playground</h1>
+          <h1 className="text-2xl lg:text-4xl font-bold">Creative Commons NFT Playground</h1>
           <div>
             {renderActionButton()}
           </div>
