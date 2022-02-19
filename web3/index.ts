@@ -1,6 +1,6 @@
-import Web3Modal from "web3modal";
-import BigNumber from "bignumber.js";
-import {BLOCK_EXPLORER_URLS, RPC_URLS} from "../constants";
+import Web3Modal from "web3modal"
+import BigNumber from "bignumber.js"
+import { BLOCK_EXPLORER_URLS, RPC_URLS } from "../constants"
 
 export const createProvider = async (network?: string, onChainChange?: (chainId: number) => void) => {
   try {
@@ -27,7 +27,7 @@ export const switchNetwork = async (provider: any) => {
   try {
     await provider.request({
       method: "wallet_switchEthereumChain",
-      params: [{chainId: "0x13881"}],
+      params: [{ chainId: "0x13881" }],
     })
   } catch (error) {
     if (error.code === 4902) {
