@@ -76,7 +76,6 @@ function App({ Component, pageProps }) {
       await switchNetwork(provider)
     }
     if (!provider) return
-    dispatch({ type: 'SET_WEB3_PROVIDER', provider })
 
     const web3Provider = new providers.Web3Provider(provider)
     const signer = web3Provider.getSigner()
