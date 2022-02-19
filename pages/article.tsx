@@ -56,7 +56,6 @@ export default function Article() {
 
   async function mintAsDonation() {
     const { amount } = formInput
-    alert(amount)
     let url = ""
     try {
       if (cid.startsWith("Qm")) {
