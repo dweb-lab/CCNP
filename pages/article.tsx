@@ -31,19 +31,19 @@ export default function Article() {
   })
 
   const [popoverShow, setPopoverShow] = useState(false)
-  if (typeof window !== "undefined") {
-    const btnRef = createRef()
-    const popoverRef = createRef()
-    const openTooltip = () => {
-      createPopper(btnRef.current, popoverRef.current, {
-        placement: "top",
-      })
-      setPopoverShow(true)
-    }
-    const closeTooltip = () => {
-      setPopoverShow(false)
-    }
+  const btnRef = createRef<HTMLButtonElement>()
+  const popoverRef = createRef<HTMLDivElement>()
+  const openTooltip = () => {
+    createPopper(btnRef.current, popoverRef.current, {
+      placement: "top",
+    })
+    setPopoverShow(true)
   }
+  const closeTooltip = () => {
+    setPopoverShow(false)
+  }
+  // if (typeof window !== "undefined") {
+  // }
 
   async function createMint() {
     if (!nft?.url) return

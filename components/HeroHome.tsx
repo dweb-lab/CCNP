@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-// import Modal from '../utils/Modal';
-// import HeroImage from '../images/hero-image.png';
+import React, { useState } from 'react'
 
 function HeroHome() {
 
@@ -49,7 +47,7 @@ function HeroHome() {
       </div>
 
     </section>
-  );
+  )
 }
 
-export default HeroHome;
+export default HeroHome
