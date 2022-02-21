@@ -1,8 +1,11 @@
 import { Layout } from "../components/Layout"
+import HeroHome from '../components/HeroHome'
 
-export default function Home() {
+function Home() {
   return (
     <Layout>
+
+
       <div className="px-4 container mx-auto">
         <h2 className="p-6 lg:px-20 lg:py-10 text-3xl">📢Tips</h2>
         <ul className="p-6 lg:px-20">
@@ -81,6 +84,9 @@ export default function Home() {
           </li>
         </ul>
       </div>
+
     </Layout>
   )
 }
+
+export default Home
