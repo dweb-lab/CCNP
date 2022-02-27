@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-clip-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-box-decoration-break: clone;
+}
+
 .current {
   text-decoration: underline #ff3028;
   font-weight: bold;
