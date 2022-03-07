@@ -122,7 +122,7 @@ export default function Article() {
               {!("minted" in nft) && nft.authors[0].wallet.eth == account && (
                 <button
                   onClick={createMint}
-                  className="font-bold bg-pink-500 rounded p-2 text-white mt-2">
+                  className="font-bold bg-blue-500 rounded p-2 text-white mt-2">
                   Mint (Will sign 2 times. Be patient...)
                 </button>
               )}
@@ -130,7 +130,7 @@ export default function Article() {
               {nft.authors[0].wallet.eth == account && (
                 <button
                   onClick={gotoEdit}
-                  className="font-bold bg-pink-500 rounded p-2 text-white mt-2">
+                  className="font-bold bg-blue-500 rounded p-2 text-white mt-2">
                   Edit
                 </button>
               )}
@@ -138,7 +138,7 @@ export default function Article() {
               {nft.authors[0].wallet.eth == account && (
                 <button
                   onClick={storeNFTtoFileCoin}
-                  className="font-bold bg-pink-500 rounded p-2 text-white mt-2">
+                  className="font-bold bg-blue-500 rounded p-2 text-white mt-2">
                   Store NFT on the Filecoin network(optional)
                 </button>
               )}
