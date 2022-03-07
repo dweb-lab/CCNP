@@ -155,7 +155,7 @@ export default function Article() {
   return (
     <Layout>
       <div className="flex justify-center">
-        <div className="p-6 w-full">
+        <div className="container mx-80">
           <div className="rounded-xl overflow-hidden">
             <img src={nft.image} className="rounded" />
             <div className="py-6">
