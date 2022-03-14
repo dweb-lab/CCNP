@@ -1,6 +1,8 @@
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { CID } from "multiformats/cid"
+
 import { nftmarketaddress, nftaddress } from "../config"
 
 import Market from "../artifacts/contracts/Market.sol/NFTMarket.json"
@@ -39,6 +41,13 @@ export default function MyAssets() {
           path = tokenUri.substring(8, 67)
         }
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
+        if (meta.data.image.startsWith("https://ipfs.infura.io/ipfs/")) {
+          let acid0 = meta.data.image.slice(28) // v0
+          const v0 = CID.parse(acid0)
+          const v1 = v0.toV1().toString()
+          meta.data.image = `https://${v1}.ipfs.infura-ipfs.io/` // or let user choose gateway
+          console.log("meta.data.image", meta.data.image)
+        }
         let item = {
           price,
           tokenId: i.tokenId.toNumber(),
