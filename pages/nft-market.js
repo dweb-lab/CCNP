@@ -48,10 +48,15 @@ export default function Home() {
         console.log("i.tokenId", i.tokenId)
         console.log("meta", meta)
         console.log(i.price.toString(), "raw price")
+        let path = null
+        if (tokenUri.startsWith("https://bafy")) {
+          path = tokenUri.substring(8, 67)
+        }
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
         let item = {
           price,
           itemId: i.itemId.toNumber(), // tokenId: i.tokenId.toNumber(),
+          path: path,
           seller: i.seller,
           owner: i.owner,
           image: meta.data.image,

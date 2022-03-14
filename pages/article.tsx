@@ -175,7 +175,14 @@ export default function Article() {
                 &nbsp;&nbsp;&nbsp;&nbsp;Author-Wallet:{" "}
                 {nft.authors[0].wallet.eth}
               </p>
-              <p>Tags: {nft.tags}</p>
+              <p>
+                Tags: &nbsp;
+                {nft.tags.map((tag, i) => (
+                  <a key={i} href={"/articles?tag=" + tag}>
+                    {tag}{" "}
+                  </a>
+                ))}
+              </p>
               <p>
                 License: <a href={nft.licenseURL}>{nft.license}</a>
               </p>

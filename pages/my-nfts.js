@@ -42,12 +42,17 @@ export default function CreatorDashboard() {
       data.map(async (i) => {
         const tokenUri = await tokenContract.tokenURI(i.tokenId)
         const meta = await axios.get(tokenUri)
+        let path = null
+        if (tokenUri.startsWith("https://bafy")) {
+          path = tokenUri.substring(8, 67)
+        }
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
         console.log("meta", meta)
         console.log("i", i)
         let item = {
           price,
           tokenId: i.tokenId.toNumber(),
+          path: path,
           seller: i.seller,
           owner: i.owner,
           sold: i.sold,
