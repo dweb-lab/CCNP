@@ -2,6 +2,7 @@ import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Web3Modal from "web3modal"
+import { CID } from "multiformats/cid"
 
 import { nftaddress, nftmarketaddress } from "../config"
 
@@ -53,6 +54,15 @@ export default function Home() {
           path = tokenUri.substring(8, 67)
         }
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
+
+        if (meta.data.image.startsWith("https://ipfs.infura.io/ipfs/")) {
+          let acid0 = meta.data.image.slice(28) // v0
+          const v0 = CID.parse(acid0)
+          const v1 = v0.toV1().toString()
+          meta.data.image = `https://${v1}.ipfs.infura-ipfs.io/` // or let user choose gateway
+          console.log("meta.data.image", meta.data.image)
+        }
+
         let item = {
           price,
           itemId: i.itemId.toNumber(), // tokenId: i.tokenId.toNumber(),
