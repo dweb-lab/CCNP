@@ -34,10 +34,15 @@ export default function MyAssets() {
         const tokenUri = await tokenContract.tokenURI(i.tokenId)
         console.log(tokenUri)
         const meta = await axios.get(tokenUri)
+        let path = null
+        if (tokenUri.startsWith("https://bafy")) {
+          path = tokenUri.substring(8, 67)
+        }
         let price = ethers.utils.formatUnits(i.price.toString(), "ether")
         let item = {
           price,
           tokenId: i.tokenId.toNumber(),
+          path: path,
           seller: i.seller,
           owner: i.owner,
           image: meta.data.image,
